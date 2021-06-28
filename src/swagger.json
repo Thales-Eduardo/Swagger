@@ -1,0 +1,182 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api produtos",
+    "description": "Essa api e apenas para introduzir ao swagger.",
+    "termsOfService": "http://localhost:3333",
+    "contact": {
+      "name": "Thales Eduardo",
+      "email": "thalesdev22@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "Api de test"
+    },
+    {
+      "url": "https://www.prodc.com",
+      "description": "Api de produção."
+    }
+  ],
+  "paths": {
+    "/produtos/findByName": {
+      "get": {
+        "summary": "Buscar pelo nome",
+        "description": "Essa rota busca um produto pelo nome",
+        "tags": ["Produtos"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do produto para buscar",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/produtos": {
+      "post": {
+        "summary": "Cadastro de produto.",
+        "description": "Essa rota ira cria um produto",
+        "tags": ["Produtos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "product": {
+                  "value": {
+                    "name": "chocolate❤",
+                    "preco": 2.0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Esse produto já existe."
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/produtos/{id}": {
+      "put": {
+        "summary": "Alterar produto.",
+        "description": "Essa rota vai altera o produto pelo id",
+        "tags": ["Produtos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Alterar produto pelo id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "product": {
+                  "value": {
+                    "name": "coxinha😜",
+                    "preco": 4
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Deu erro, esse produto não existe."
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar produto.",
+        "description": "Essa rota vai deletar o produto pelo id",
+        "tags": ["Produtos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deletar produto pelo id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Deu erro, esse produto não existe."
+          },
+          "204": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
